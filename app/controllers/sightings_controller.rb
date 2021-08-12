@@ -1,5 +1,6 @@
 class SightingsController < ApplicationController
     before_action :set_sighting, only: [:show, :update, :destroy]
+    before_action :unauthorized_check, only: [:update, :destroy]
   
    
     def index

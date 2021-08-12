@@ -4,4 +4,4 @@ class UserSerializer < ActiveModel::Serializer
     def created_date
       self.object && self.object.created_at.strftime('%d/%m/%Y')
     end
-  end
+end
