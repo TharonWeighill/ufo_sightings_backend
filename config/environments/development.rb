@@ -1,3 +1,5 @@
+require "active_support/core_ext/integer/time"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -5,6 +7,7 @@ Rails.application.configure do
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
+  config.autoloader = :classic
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -30,6 +33,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   config.action_mailer.perform_caching = false
 
@@ -61,5 +65,4 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
