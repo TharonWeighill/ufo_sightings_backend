@@ -1,14 +1,3 @@
-Devise.setup do |config|
-config.jwt do |jwt|
-  jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
-  jwt.dispatch_requests = [
-    ['POST', %r{^/login$}]
-  ]
-  jwt.revocation_requests = [
-    ['DELETE', %r{^/logout$}]
-  ]
-  jwt.expiration_time = 30.minutes.to_i
-end 
 # frozen_string_literal: true
 
 # Assuming you have not yet modified this file, each configuration option below
@@ -19,12 +8,13 @@ end
 #
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '7db8e1458693d7b5e62e4c1e0664eec2cecc041d741a90e320c6cb2841c770fe2b764530b6c7ab3bea08bc8285eff44b9ecc5b31e83ed2e04c268bd6e4a0faea'
+  # config.secret_key = '311ce031167c0ba04d630d9447df5105edfd6eb0434a991aabc9daaf99f1a4c4fce816e163d74f452b63ba83111f2402664284475e0c4901b4fc7e2a7d006e54'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -35,7 +25,6 @@ end
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
@@ -47,7 +36,16 @@ end
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/active_record'
-
+  config.jwt do |jwt|
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.dispatch_requests = [
+      ['POST', %r{^/login$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/logout$}]
+    ]
+    jwt.expiration_time = 30.minutes.to_i
+  end
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for
@@ -136,7 +134,7 @@ end
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '987f8474e124fd52aa9e13173cfa41900800d8cfea0b4c6ea9e7d29959e518d937c214cb0ea86cda850bf7e7d32ddcbaefe11b4afc8842509ecf9fc08fcb1290'
+  # config.pepper = '6832fb8180244aae14a42214e43b35e310d55f2c3fa68b27aebc72be7712a9e6ce0cbcce58fa4cddc72c6a5c3be44965ade4efda0990c5201a9e678578bc6078'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -273,7 +271,7 @@ end
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = ['*/*', :html]
+  config.navigational_formats = []
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -318,7 +316,4 @@ end
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
-  
-
-  
 end
