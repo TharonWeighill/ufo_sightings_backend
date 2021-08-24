@@ -13,15 +13,11 @@
 ActiveRecord::Schema.define(version: 2021_08_12_212741) do
 
   create_table "sightings", force: :cascade do |t|
-    t.float "date_time"
     t.string "city"
-    t.string "state"
-    t.string "country"
-    t.string "shape"
     t.string "comments"
-    t.float "date_posted"
+    t.string "date_posted"
     t.float "latitude"
-    t.string "longitutde"
+    t.float "longitude"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
